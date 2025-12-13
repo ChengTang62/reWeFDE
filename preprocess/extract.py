@@ -188,7 +188,7 @@ def main(trace_path, out_path):
     """
     start batches to handle feature extraction
     """
-    file_list = enumerate_files(trace_path)
+    file_list = enumerate_files(trace_path, extension='.cell')
 
     # start BATCH_NUM processes for computation
     pool = Pool()
