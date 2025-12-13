@@ -6,7 +6,7 @@ from data_utils import logger
 #from sklearn.cluster import DBSCAN
 from hdbscan import HDBSCAN
 from kde_wrapper import KDE
-from collections import Iterable
+from collections.abc import Iterable
 from scipy import stats
 
 
