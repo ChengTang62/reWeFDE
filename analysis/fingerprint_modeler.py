@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import math
 from data_utils import logger
-from collections import Iterable
+from collections.abc import Iterable
 from kde_wrapper import KDE
 import numpy as np
 
