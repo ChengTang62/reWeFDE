@@ -168,6 +168,7 @@ def main(features_path, output_path, n_procs=0, n_samples=5000, topn=100, nmi_th
     """
     # prepare feature dataset
     logger.info("Loading dataset.")
+    print(features_path)
     feature_data = WebsiteData(features_path)
     logger.info("Loaded {} sites.".format(len(feature_data.sites)))
     logger.info("Loaded {} instances.".format(len(feature_data)))
