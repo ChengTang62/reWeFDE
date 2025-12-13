@@ -73,8 +73,15 @@ def CumulFeatures(packets, featureCount):
 
     if separateClassifier:
         # cumulative in and out
-        posFeatures = numpy.interp(numpy.linspace(total[0], total[-1], featureCount / 2), total, pos)
-        negFeatures = numpy.interp(numpy.linspace(total[0], total[-1], featureCount / 2), total, neg)
+        half = featureCount // 2  
+        
+        posFeatures = numpy.interp(
+            numpy.linspace(total[0], total[-1], half), total, pos
+        )
+        negFeatures = numpy.interp(
+            numpy.linspace(total[0], total[-1], half), total, neg
+        )
+
         for el in itertools.islice(posFeatures, None):
             features.append(el)
         for el in itertools.islice(negFeatures, None):
