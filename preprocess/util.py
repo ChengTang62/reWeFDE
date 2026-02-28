@@ -7,18 +7,18 @@ NORMALIZE_TRAFFIC = 0
 PACKET_NUMBER = True
 PKT_TIME = True
 UNIQUE_PACKET_LENGTH = False
-NGRAM_ENABLE = True
-TRANS_POSITION = True
+NGRAM_ENABLE = False   # removed from extract (not in table)
+TRANS_POSITION = False  # removed from extract (not in table)
 PACKET_DISTRIBUTION = True
 BURSTS = True
 FIRST20 = True
 CUMUL = True
-FIRST30_PKT_NUM = True
-LAST30_PKT_NUM = True
-PKT_PER_SECOND = True
+FIRST30_PKT_NUM = False  # removed from extract (not in table)
+LAST30_PKT_NUM = False   # removed from extract (not in table)
+PKT_PER_SECOND = False   # removed from extract (not in table)
 INTERVAL_KNN = True
-INTERVAL_ICICS = True
-INTERVAL_WPES11 = True
+INTERVAL_ICICS = False   # removed from extract (not in table)
+INTERVAL_WPES11 = False  # removed from extract (not in table)
 TRAFFIC_STATS = False  # traff_stats + pkt_len combined features
 
 # packet number per second, how many seconds to count?

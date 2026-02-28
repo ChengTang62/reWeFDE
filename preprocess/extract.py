@@ -14,8 +14,7 @@ import re
 import util
 from features import *
 from util import FEATURE_EXT, NORMALIZE_TRAFFIC, PACKET_NUMBER, PKT_TIME, UNIQUE_PACKET_LENGTH, \
-    NGRAM_ENABLE, TRANS_POSITION, PACKET_DISTRIBUTION, BURSTS, FIRST20, CUMUL, FIRST30_PKT_NUM, LAST30_PKT_NUM, \
-    PKT_PER_SECOND, INTERVAL_KNN, INTERVAL_ICICS, INTERVAL_WPES11, TRAFFIC_STATS, howlong, featureCount
+    PACKET_DISTRIBUTION, BURSTS, FIRST20, CUMUL, INTERVAL_KNN, TRAFFIC_STATS, featureCount
 
 
 def enumerate_files(dir, splitter='-', extension=''):
@@ -57,41 +56,12 @@ def extract(times, sizes, debug_path="./", store_feature_pos=False):
         if store_feature_pos:
             feature_pos['UNIQUE_PACKET_LENGTH'] = len(features)
 
-    # n-gram feature for ordering
-    if NGRAM_ENABLE:
-        buckets = Ngram.NgramExtract(sizes, 2)
-        features.extend(buckets)
-        buckets = Ngram.NgramExtract(sizes, 3)
-        features.extend(buckets)
-        buckets = Ngram.NgramExtract(sizes, 4)
-        features.extend(buckets)
-        buckets = Ngram.NgramExtract(sizes, 5)
-        features.extend(buckets)
-        buckets = Ngram.NgramExtract(sizes, 6)
-        features.extend(buckets)
-        if store_feature_pos:
-            feature_pos['NGRAM'] = len(features)
-
-    # trans position features
-    if TRANS_POSITION:
-        TransPosition.TransPosFeature(times, sizes, features)
-        if store_feature_pos:
-            feature_pos['TRANS_POSITION'] = len(features)
-
     if INTERVAL_KNN:
         Interval.IntervalFeature(times, sizes, features, 'KNN')
         if store_feature_pos:
             feature_pos['INTERVAL_KNN'] = len(features)
-    if INTERVAL_ICICS:
-        Interval.IntervalFeature(times, sizes, features, 'ICICS')
-        if store_feature_pos:
-            feature_pos['INTERVAL_ICICS'] = len(features)
-    if INTERVAL_WPES11:
-        Interval.IntervalFeature(times, sizes, features, 'WPES11')
-        if store_feature_pos:
-            feature_pos['INTERVAL_WPES11'] = len(features)
 
-    # Packet distributions (where are the outgoing packets concentrated) (knn + k-anonymity)
+    # Packet distributions
     if PACKET_DISTRIBUTION:
         PktDistribution.PktDistFeature(times, sizes, features)
         if store_feature_pos:
@@ -108,25 +78,6 @@ def extract(times, sizes, debug_path="./", store_feature_pos=False):
         HeadTail.First20(times, sizes, features)
         if store_feature_pos:
             feature_pos['FIRST20'] = len(features)
-
-    # first 30: outgoing/incoming packet number (k-anonymity)
-    if FIRST30_PKT_NUM:
-        HeadTail.First30PktNum(times, sizes, features)
-        if store_feature_pos:
-            feature_pos['FIRST30_PKT_NUM'] = len(features)
-
-    # last 30: outgoing/incoming packet number (k-anonymity)
-    if LAST30_PKT_NUM:
-        HeadTail.Last30PktNum(times, sizes, features)
-        if store_feature_pos:
-            feature_pos['LAST30_PKT_NUM'] = len(features)
-
-    # packets per second (k-anonymity)
-    # plus alternative list
-    if PKT_PER_SECOND:
-        PktSec.PktSecFeature(times, sizes, features, howlong)
-        if store_feature_pos:
-            feature_pos['PKT_PER_SECOND'] = len(features)
 
     # CUMUL features
     if CUMUL:
