@@ -15,7 +15,7 @@ import util
 from features import *
 from util import FEATURE_EXT, NORMALIZE_TRAFFIC, PACKET_NUMBER, PKT_TIME, UNIQUE_PACKET_LENGTH, \
     NGRAM_ENABLE, TRANS_POSITION, PACKET_DISTRIBUTION, BURSTS, FIRST20, CUMUL, FIRST30_PKT_NUM, LAST30_PKT_NUM, \
-    PKT_PER_SECOND, INTERVAL_KNN, INTERVAL_ICICS, INTERVAL_WPES11, howlong, featureCount
+    PKT_PER_SECOND, INTERVAL_KNN, INTERVAL_ICICS, INTERVAL_WPES11, TRAFFIC_STATS, howlong, featureCount
 
 
 def enumerate_files(dir, splitter='-', extension=''):
@@ -133,6 +133,12 @@ def extract(times, sizes, debug_path="./", store_feature_pos=False):
         features.extend(Cumul.CumulFeatures(sizes, featureCount))
         if store_feature_pos:
             feature_pos['CUMUL'] = len(features)
+
+    # Traffic stats + packet length bins (traff_stats + pkt_len)
+    if TRAFFIC_STATS:
+        features.extend(TrafficStats.TrafficStatsFeatures(times, sizes))
+        if store_feature_pos:
+            feature_pos['TRAFFIC_STATS'] = len(features)
 
     if store_feature_pos:
         # output FeaturePos

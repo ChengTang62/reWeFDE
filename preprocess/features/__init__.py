@@ -8,4 +8,5 @@ __all__ = ['Ngram',
            'TransPosition',
            'PktLen',
            'PktDistribution',
-           'PktNum']
+           'PktNum',
+           'TrafficStats']

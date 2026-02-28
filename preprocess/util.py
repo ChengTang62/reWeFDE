@@ -19,6 +19,7 @@ PKT_PER_SECOND = True
 INTERVAL_KNN = True
 INTERVAL_ICICS = True
 INTERVAL_WPES11 = True
+TRAFFIC_STATS = False  # traff_stats + pkt_len combined features
 
 # packet number per second, how many seconds to count?
 howlong = 100
