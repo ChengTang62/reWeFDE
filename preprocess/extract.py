@@ -14,7 +14,8 @@ import re
 import util
 from features import *
 from util import FEATURE_EXT, NORMALIZE_TRAFFIC, PACKET_NUMBER, PKT_TIME, UNIQUE_PACKET_LENGTH, \
-    PACKET_DISTRIBUTION, BURSTS, FIRST20, CUMUL, INTERVAL_KNN, TRAFFIC_STATS, featureCount
+    PACKET_DISTRIBUTION, BURSTS, FIRST20, CUMUL, INTERVAL_KNN, TRAFFIC_STATS, featureCount, howlong, \
+    KFINGERPRINT, KNN_ATTACK, CUMUL_ATTACK, DF_ATTACK, TIKTOK_TIMING_ONLY, TIKTOK_DIRECTION_TIMING, DFTOK_ATTACK, RF_ATTACK
 
 
 def enumerate_files(dir, splitter='-', extension=''):
@@ -90,6 +91,40 @@ def extract(times, sizes, debug_path="./", store_feature_pos=False):
         features.extend(TrafficStats.TrafficStatsFeatures(times, sizes))
         if store_feature_pos:
             feature_pos['TRAFFIC_STATS'] = len(features)
+
+    # --- Attack-specific feature blocks (table order: run outputs these only) ---
+    if KFINGERPRINT:
+        KFingerprint.KFingerprintFeature(times, sizes, features, howlong)
+        if store_feature_pos:
+            feature_pos['KFINGERPRINT'] = len(features)
+    if KNN_ATTACK:
+        KNN.KNNFeature(times, sizes, features)
+        if store_feature_pos:
+            feature_pos['KNN_ATTACK'] = len(features)
+    if CUMUL_ATTACK:
+        features.extend(Cumul.CumulFeatures(sizes, featureCount))
+        if store_feature_pos:
+            feature_pos['CUMUL_ATTACK'] = len(features)
+    if DF_ATTACK:
+        DF.DFFeature(times, sizes, features)
+        if store_feature_pos:
+            feature_pos['DF_ATTACK'] = len(features)
+    if TIKTOK_TIMING_ONLY:
+        TikTokTimingOnly.TikTokTimingOnlyFeature(times, sizes, features)
+        if store_feature_pos:
+            feature_pos['TIKTOK_TIMING_ONLY'] = len(features)
+    if TIKTOK_DIRECTION_TIMING:
+        TikTokDirectionTiming.TikTokDirectionTimingFeature(times, sizes, features)
+        if store_feature_pos:
+            feature_pos['TIKTOK_DIRECTION_TIMING'] = len(features)
+    if DFTOK_ATTACK:
+        DFTok.DFTokFeature(times, sizes, features)
+        if store_feature_pos:
+            feature_pos['DFTOK_ATTACK'] = len(features)
+    if RF_ATTACK:
+        RF.RFFeature(times, sizes, features)
+        if store_feature_pos:
+            feature_pos['RF_ATTACK'] = len(features)
 
     if store_feature_pos:
         # output FeaturePos

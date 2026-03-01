@@ -9,4 +9,11 @@ __all__ = ['Ngram',
            'PktLen',
            'PktDistribution',
            'PktNum',
-           'TrafficStats']
+           'TrafficStats',
+           'TikTokTimingOnly',
+           'DF',
+           'DFTok',
+           'TikTokDirectionTiming',
+           'RF',
+           'KFingerprint',
+           'KNN']

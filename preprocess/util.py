@@ -4,22 +4,33 @@ FEATURE_EXT = ".features"
 NORMALIZE_TRAFFIC = 0
 
 # turn on/off debug:
-PACKET_NUMBER = True
-PKT_TIME = True
+# Generic feature blocks (off when using attack-specific blocks below)
+PACKET_NUMBER = False
+PKT_TIME = False
 UNIQUE_PACKET_LENGTH = False
 NGRAM_ENABLE = False   # removed from extract (not in table)
 TRANS_POSITION = False  # removed from extract (not in table)
-PACKET_DISTRIBUTION = True
-BURSTS = True
-FIRST20 = True
-CUMUL = True
+PACKET_DISTRIBUTION = False
+BURSTS = False
+FIRST20 = False
+CUMUL = False  # use CUMUL_ATTACK block below for table attacks
 FIRST30_PKT_NUM = False  # removed from extract (not in table)
 LAST30_PKT_NUM = False   # removed from extract (not in table)
 PKT_PER_SECOND = False   # removed from extract (not in table)
-INTERVAL_KNN = True
+INTERVAL_KNN = False
 INTERVAL_ICICS = False   # removed from extract (not in table)
 INTERVAL_WPES11 = False  # removed from extract (not in table)
 TRAFFIC_STATS = False  # traff_stats + pkt_len combined features
+
+# Attack-specific feature blocks (table attacks) — run uses these only
+KFINGERPRINT = True    # k-Fingerprinting
+KNN_ATTACK = True      # KNN
+CUMUL_ATTACK = True    # CUMUL (table)
+DF_ATTACK = True       # DF (direction, sizes)
+TIKTOK_TIMING_ONLY = True       # Tik-Tok (timing only)
+TIKTOK_DIRECTION_TIMING = True  # Tik-Tok (direction, timing)
+DFTOK_ATTACK = True    # DF-Tok (direction, timing, sizes)
+RF_ATTACK = True       # RF (direction, timing)
 
 # packet number per second, how many seconds to count?
 howlong = 100
